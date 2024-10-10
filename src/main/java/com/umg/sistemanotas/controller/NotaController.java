@@ -1,5 +1,4 @@
 package com.umg.sistemanotas.controller;
-
 import com.umg.sistemanotas.model.Nota;
 import com.umg.sistemanotas.model.Estudiante;
 import com.umg.sistemanotas.repository.NotaRepository;
@@ -8,26 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/notas")
 public class NotaController {
     @Autowired
     private NotaRepository notaRepository;
-
     @Autowired
     private EstudianteRepository estudianteRepository;
-
     @GetMapping
     public List<Nota> getAllNotas() {
         return notaRepository.findAll();
     }
-
     @GetMapping("/{id}")
     public Nota getNotaById(@PathVariable Long id) {
         return notaRepository.findById(id).orElseThrow(() -> new RuntimeException("Nota no encontrada"));
     }
-
     @PostMapping
     public Nota createNota(@RequestBody Nota nota) {
         Estudiante estudiante = estudianteRepository.findById(nota.getEstudiante().getId())
